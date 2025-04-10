@@ -1,10 +1,9 @@
 from textnode import *
 from htmlnode import *
+from update_public import *
 
 def main():
     
-    new_obj = TextNode("This is some anchor text", TextType.LINK, "https//www.boot.dev")
-    
-    print(new_obj)
+    print(copy_to_public())
 
 main()
