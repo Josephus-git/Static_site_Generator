@@ -1,6 +1,6 @@
 from enum import Enum
 
-from markdown import *
+from markdown_ import *
 
 from htmlnode import *
 
@@ -100,7 +100,8 @@ def heading_to_html(text):
             break
     if level + 1 >= len(text):
         raise ValueError(f"invalid heading level: {level}")
-    children = text_to_children(text)
+    f_text = text[level + 1 :]
+    children = text_to_children(f_text)
     return ParentNode(f"h{level}", children)
 
 

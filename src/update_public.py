@@ -23,6 +23,7 @@ def copy_to_public():
     else: os.mkdir("public")
 
     log = []
-    
-    return copy_actual("static", "public")
+    copy_actual("static", "public")
+    print(log)
+    return 
 
