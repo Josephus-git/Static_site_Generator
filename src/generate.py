@@ -57,10 +57,12 @@ def generate_page(from_path, template_path, dest_path):
     for i in t_p_list:
         if i.find("{{ Title }}") != -1:
             line = i.replace("{{ Title }}", title)
-            new_t_p_list.append(line)
+            f_line = line.replace('href="/', 'href="{basepath}')
+            new_t_p_list.append(f_line)
         elif i.find("{{ Content }}") != -1:
             line = i.replace("{{ Content }}", md_to_html)
-            new_t_p_list.append(line)
+            f_line = line.replace('href="/', 'href="{basepath}')
+            new_t_p_list.append(f_line)
         else: new_t_p_list.append(i)
 #---------
     t_p_content_actual = "\n".join(new_t_p_list)
