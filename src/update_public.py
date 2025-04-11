@@ -3,7 +3,7 @@ import os
 import shutil
 
 
-def copy_to_public():
+def copy_to_public(from_path, to_path):
     def copy_actual(path_dir, current_public_path):
         new_dir_lst = os.listdir(path=path_dir)
         for i in new_dir_lst:
@@ -17,13 +17,13 @@ def copy_to_public():
                 copy_actual(path_, new_path_in_public) 
         return log
 
-    if os.path.exists("public"):
-        shutil.rmtree("public")
-        os.mkdir("public")
-    else: os.mkdir("public")
+    if os.path.exists(to_path):
+        shutil.rmtree(to_path)
+        os.mkdir(to_path)
+    else: os.mkdir(to_path)
 
     log = []
-    copy_actual("static", "public")
+    copy_actual(from_path, to_path)
     print(log)
     return 
 

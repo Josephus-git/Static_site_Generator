@@ -4,6 +4,24 @@ from blocktype import *
 
 import os
 
+from pathlib import Path
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    dir_list = os.listdir(dir_path_content)
+    for i in dir_list:
+        direc = os.path.join(dir_path_content, i)
+        dest_file_path = os.path.join(dest_dir_path, i)
+        if os.path.isfile(direc):
+            dest_file_path = Path(dest_file_path).with_suffix(".html")
+            generate_page(direc, template_path, dest_file_path)
+        else:
+            generate_pages_recursive(direc, template_path, dest_file_path)
+
+    return dir_list
+
+
+
 
 def extract_title(markdown):
     md_list = markdown.split("\n")
@@ -23,8 +41,12 @@ def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     f_p = open(from_path, "r")
     f_p_content = f_p.read()
+    f_p.close()
+
     t_p = open(template_path, "r")
     t_p_content = t_p.read()
+    t_p.close()
+    
     md_to_html_node = markdown_to_html_node(f_p_content)
     md_to_html = md_to_html_node.to_html()
     title = extract_title(f_p_content)
@@ -42,14 +64,14 @@ def generate_page(from_path, template_path, dest_path):
         else: new_t_p_list.append(i)
 #---------
     t_p_content_actual = "\n".join(new_t_p_list)
-    dir_pt = os.path.dirname(dest_path)
-    if not os.path.exists:
-        os.makedirs(dir_pt)
     
+    dir_pt = os.path.dirname(dest_path)   #this removes the file attached to the path provided
+
+
+    if not os.path.exists(dir_pt):
+        os.makedirs(dir_pt)
     d_p = open(dest_path, "w")
     d_p.write(t_p_content_actual)
-
-    f_p.close()
-    t_p.close()
-    return "done"
     
+    return "done"
+

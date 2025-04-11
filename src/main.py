@@ -1,14 +1,18 @@
-from textnode import *
-from htmlnode import *
 from update_public import *
+
 from generate import *
+
 
 def main():
     
-    copy_to_public()
-    from_path = "content/index.md"
+    from_path = "content"
+    static = "static"
     template_path = "template.html"
-    dest_path = "public/index.html"
-    print(generate_page(from_path, template_path, dest_path))
+    dest_path = "public"
+
+    copy_to_public(static, dest_path)
+    print(generate_pages_recursive(from_path, template_path, dest_path))
+
+
 
 main()
