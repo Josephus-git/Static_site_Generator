@@ -18,7 +18,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
         else:
             generate_pages_recursive(direc, template_path, dest_file_path, basepath)
 
-    return dir_list
+    
 
 
 
@@ -57,13 +57,13 @@ def generate_page(from_path, template_path, dest_path, basepath):
     for i in t_p_list:
         if i.find("{{ Title }}") != -1:
             line = i.replace("{{ Title }}", title)
-            f_line = line.replace('href="/', f'href="{basepath}')
+            f_line = line.replace('href="/', f'href="{basepath}/')
             new_t_p_list.append(f_line)
         elif i.find("{{ Content }}") != -1:
             line = i.replace("{{ Content }}", md_to_html)
             f_line = line.replace('href="/', f'href="{basepath}')
             new_t_p_list.append(f_line)
-        else: new_t_p_list.append(i)
+        else: new_t_p_list.append(i.replace('href="/', f'href="{basepath}'))
 #---------
     t_p_content_actual = "\n".join(new_t_p_list)
     
