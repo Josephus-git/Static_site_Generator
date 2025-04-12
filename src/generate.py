@@ -7,16 +7,16 @@ import os
 from pathlib import Path
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     dir_list = os.listdir(dir_path_content)
     for i in dir_list:
         direc = os.path.join(dir_path_content, i)
         dest_file_path = os.path.join(dest_dir_path, i)
         if os.path.isfile(direc):
             dest_file_path = Path(dest_file_path).with_suffix(".html")
-            generate_page(direc, template_path, dest_file_path)
+            generate_page(direc, template_path, dest_file_path, basepath)
         else:
-            generate_pages_recursive(direc, template_path, dest_file_path)
+            generate_pages_recursive(direc, template_path, dest_file_path, basepath)
 
     return dir_list
 
@@ -37,7 +37,7 @@ def extract_title(markdown):
 
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     f_p = open(from_path, "r")
     f_p_content = f_p.read()
@@ -57,11 +57,11 @@ def generate_page(from_path, template_path, dest_path):
     for i in t_p_list:
         if i.find("{{ Title }}") != -1:
             line = i.replace("{{ Title }}", title)
-            f_line = line.replace('href="/', 'href="{basepath}')
+            f_line = line.replace('href="/', f'href="{basepath}')
             new_t_p_list.append(f_line)
         elif i.find("{{ Content }}") != -1:
             line = i.replace("{{ Content }}", md_to_html)
-            f_line = line.replace('href="/', 'href="{basepath}')
+            f_line = line.replace('href="/', f'href="{basepath}')
             new_t_p_list.append(f_line)
         else: new_t_p_list.append(i)
 #---------
