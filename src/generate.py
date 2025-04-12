@@ -58,12 +58,16 @@ def generate_page(from_path, template_path, dest_path, basepath):
         if i.find("{{ Title }}") != -1:
             line = i.replace("{{ Title }}", title)
             f_line = line.replace('href="/', f'href="{basepath}/')
-            new_t_p_list.append(f_line)
+            f1 = f_line.replace('src="/', f'src="{basepath}')
+            new_t_p_list.append(f1)
         elif i.find("{{ Content }}") != -1:
             line = i.replace("{{ Content }}", md_to_html)
             f_line = line.replace('href="/', f'href="{basepath}')
-            new_t_p_list.append(f_line)
-        else: new_t_p_list.append(i.replace('href="/', f'href="{basepath}'))
+            f1 = f_line.replace('src="/', f'src="{basepath}')
+            new_t_p_list.append(f1)
+        else: 
+            i1 = i.replace('src="/', f'src="{basepath}')
+            new_t_p_list.append(i1.replace('href="/', f'href="{basepath}'))
 #---------
     t_p_content_actual = "\n".join(new_t_p_list)
     
